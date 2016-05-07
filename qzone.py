@@ -1,4 +1,5 @@
 #-*- coding: utf-8 -*-
+from bs4 import BeautifulSoup
 import requests
 import string
 import thread
@@ -24,17 +25,30 @@ class my_spider:
     qq_number = raw_input();
     url="http://user.qzone.qq.com/"+qq_number
     print url
-    headers={
-             'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101 Firefox/45.0',
-	     'Accept': 'image/png,image/*;q=0.8,*/*;q=0.5',
+    print u"请输入qq号码对应的cookie值"
+    qq_cookie = raw_input();
+    header_temp={
+	     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
              'Accept-Language': 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
-	     'Cookie' : 'skey=@FRy5DAAcW; zzpaneluin=; zzpanelkey=; p_skey=2UMFO9hAbh7EbUrZSCMreWsqSN0BqDxxVZWlIeCjtns_; pt4_token=ihdi4sFI7yzFxr3Rd2lYO6epaS1JL*AyknpSa-EtMe8_; p_uin=o0386731845; pgv_pvi=5139627008; pgv_si=s7608884224; pgv_pvid=7421656560; pgv_info=ssid=s8439409521; pt2gguin=o0386731845; uin=o0386731845; RK=lfFHhsPWR0; qzone_check=386731845_1462244448; ptcz=02ecad39a63e5cbd58b23781da4ead461d761a5484e5d4e89ce91079656fbb22; randomSeed=918764; Loading=Yes'
+	     'Accept-Encoding': 'gzip, deflate',
+             'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101 Firefox/45.0',
+             'Connection': 'keep-alive',
             }
-    r = requests.get(url,headers)
+    header_temp['Cookie'] = qq_cookie;
+    s = requests.Session()
+    s.headers.update(header_temp)
+    r = s.get(url)
+    print ""
     print r.status_code
     print r.headers
-    print r.content
-      
+    #print r.content
+    i = 0
+    soup = BeautifulSoup(r.content)
+    for link in soup.find_all('f-user-info')
+      i+=1
+      print i
+      print link
+	
 
   def start(self): 
     print "begin"
