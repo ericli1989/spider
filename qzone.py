@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import requests
 import string
 import thread
-
+import re
 
 class my_spider:
 
@@ -39,15 +39,39 @@ class my_spider:
     s.headers.update(header_temp)
     r = s.get(url)
     print ""
-    print r.status_code
-    print r.headers
+    #print r.status_code
+    #print r.headers
     #print r.content
-    i = 0
-    soup = BeautifulSoup(r.content)
-    for link in soup.find_all('f-user-info')
-      i+=1
-      print i
-      print link
+    
+    myItems = re.findall('ownerProfileSummary=\["(.*?)",\r\n\t\t\t\t\t(.*?),\r\n\t\t\t\t\t(.*?),\r\n\t\t\t\t\t"(.*?)",\r\n\t\t\t\t\t"(.*?)",\r\n\t\t\t\t\t"(.*?)",\r\n\t\t\t\t\t"(.*?)",\r\n\t\t\t\t\t"(.*?)"\],', r.content, re.S) 
+    #myItems = re.findall('ownerProfileSummary=\["(.*?)"\],', r.content, re.S) 
+    for items in myItems:
+      name = items[0].strip()
+      age = items[2].strip()
+      address = items[3].strip()
+      qzone_name = items[4].strip()
+      birthday = items[6].strip()
+
+ 
+    myItems = re.findall('homeAddr:{"hco":"(.*?)","hp":"(.*?)","hc":"(.*?)"}', r.content, re.S) 
+    for item in myItems:
+      country = item[0] 
+      province = item[1] 
+      city = item[2] 
+    myfriendNums = re.findall('qq_friendNum:"(.*?)"', r.content, re.S) 
+    for num in myfriendNums:
+      friendnum = num
+    
+    #soup = BeautifulSoup(r.content)
+    
+    #print soup.findall("homeAddr")
+    #for tag in soup.findall(re.compile("homeAddr")):
+    #for tag in soup.findall(re.compile("homeAddr")):
+    #  print(tag.name)
+#    for link in soup.find_all('f-user-info')
+#      i+=1
+#      print i
+#      print link
 	
 
   def start(self): 
