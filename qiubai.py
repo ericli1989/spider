@@ -16,7 +16,6 @@ class Spider_Model:
 
     # 将所有的段子都扣出来，添加到列表中并且返回列表
     def GetPage(self,page):
-	i = 0
         print("获取第%s页..." % page)
         myUrl = "http://www.qiushibaike.com/8hr/page/" + page
         user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2504.0 Safari/537.36'
@@ -39,14 +38,16 @@ class Spider_Model:
             # item 中第二个是div的内容，也就是内容
             #print "i in m",item#.decode("utf-8")
             items.append(item.replace("<br/>","\n"))
+		
+	return items
 
 	# 2、获取图片
-	myImages = re.findall('<div class="thumb">(.*?)<img src="(.*?)" alt', unicodePage, re.S)
-	for image in myImages:
-		print image[1]
-		urllib.urlretrieve(image[1], "./"+str(i)+".jpg")
-		i += 1
-        return items
+#	myImages = re.findall('<div class="thumb">(.*?)<img src="(.*?)" alt', unicodePage, re.S)
+#	for image in myImages:
+#		print image[1]
+#		urllib.urlretrieve(image[1], "./"+str(i)+".jpg")
+#		i += 1
+#       return items
 
     # 用于加载新的段子
     def LoadPage(self):
@@ -69,8 +70,8 @@ class Spider_Model:
         print u'\n第%d页内容' % page
 	temp_i = 0
         for items in nowPage:
-		temp_i += 1
-	#	print 'index is %d, val is %s' % (temp_i, items)
+			temp_i += 1
+			print 'index is %d, val is %s' % (temp_i, items)
 
     def Start(self):
         self.enable = True
@@ -82,7 +83,7 @@ class Spider_Model:
         #thread.start_new_thread(self.LoadPage,())
 
 	print u'请输入获取第几页'
-#	tmp_page = raw_input()
+	#	tmp_page = raw_input()
 	tmp_page = "1"
         myPage = self.GetPage(tmp_page)
 	self.ShowPage(myPage,int(tmp_page))	
