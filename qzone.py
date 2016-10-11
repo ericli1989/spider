@@ -59,7 +59,7 @@ class my_spider:
     	feedstime=temp[0]
 		temp_qq_number=temp[2]
 		# 浏览页面滚动后数据信息
-		another_url = "http://ic2.qzone.qq.com/cgi-bin/feeds/feeds_html_act_all?uin=386731845&hostuin="+qq_number+"&scope=0&filter=all&flag=1&refresh=0&firstGetGroup=0&mixnocache=0&scene=0&begintime=undefined&icServerTime=&start=20&count=10&sidomain=ctc.qzonestyle.gtimg.cn&useutf8=1&outputhtmlfeed=1&refer=2&r=0.05353801200688568&g_tk="+g_tk
+		another_url = "http://ic2.qzone.qq.com/cgi-bin/feeds/feeds_html_act_all?uin="+qq_origin_number+"&hostuin="+qq_number+"&scope=0&filter=all&flag=1&refresh=0&firstGetGroup=0&mixnocache=0&scene=0&begintime=undefined&icServerTime=&start=20&count=10&sidomain=ctc.qzonestyle.gtimg.cn&useutf8=1&outputhtmlfeed=1&refer=2&r=0.05353801200688568&g_tk="+g_tk
     	self.GetPage(url_prefix, qq_number, another_url, header, feedstime)
 			 
 
